@@ -1,0 +1,198 @@
+﻿<Window x:Class="test.MainWindow"
+          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Monitor" Height="500" Width="900" Closing="Window_Closing"  >
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF009ECC" Offset="0"/>
+            <GradientStop Color="White" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid ScrollViewer.VerticalScrollBarVisibility="Auto" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="Products" FontWeight="Bold" FontSize="16" TextDecorations="Underline" FontFamily="Georgia"/>
+            <Button Width="30" Margin="0,-15,15,0" Height="30" HorizontalAlignment="Right" Click="Button_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="about.png"/>
+                </Button.Background>
+            </Button>
+        
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Operations with products:" TextWrapping="Wrap" Width="70"  Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            <Button Visibility="Collapsed" Margin="10" Width="40" Height="40" Click="Add_Button_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="add.png" TileMode="FlipXY"/>
+                </Button.Background>
+            </Button>
+                <Button  Margin="10" Width="40" Height="40" Click="Delete_Button_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="delete.png"/>
+                    </Button.Background>
+                </Button>
+                <Button Margin="10" Width="40" Height="40" Click="Load_Button_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="load.png"/>
+                </Button.Background>
+            </Button>
+        </StackPanel>
+        </StackPanel>
+        <DataGrid Grid.Row="1" Name="DataTable" Margin="0,0,0,20" 
+                        AutoGenerateColumns="False" ItemsSource="{Binding}" Width="auto"  
+                        RowDetailsVisibilityMode="VisibleWhenSelected" Height="auto"  
+                        AlternatingRowBackground="#FF4F81BD"  AlternationCount="2" HeadersVisibility="Column" 
+                        BorderBrush="{x:Null}" Background="{x:Null}" Foreground="#CC000000" FrozenColumnCount = "1" 
+                        CanUserSortColumns="{Binding IsChecked, ElementName=NO)}" HorizontalGridLinesBrush="#FF000000"
+                       VerticalGridLinesBrush="#FF003AFF"  CellEditEnding="DataTable_CellEditEnding"  >
+           
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Style.Setters>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    </Style.Setters>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn x:Name="NO" Binding="{Binding sku, Mode=OneWay}"  Header="No." MaxWidth="200" CanUserSort="False" CanUserReorder="False" CanUserResize="False">
+                    <DataGridCheckBoxColumn.ElementStyle>
+                        <Style TargetType="CheckBox">
+                            <EventSetter Event="CheckBox.Checked" Handler="OnChecked"/>
+                            <EventSetter Event="CheckBox.Unchecked" Handler="OnUnChecked"/>
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                        </Style>
+                    </DataGridCheckBoxColumn.ElementStyle>
+                </DataGridCheckBoxColumn>
+                <DataGridTextColumn x:Name="sku" Binding="{Binding sku, Mode=OneWay}" Header="SKU" MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn x:Name="core_deposit" Binding="{Binding core_deposit}" Header="CODE DEPOSIT"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="cf_shipping" Binding="{Binding cf_shipping}" Header="CF SHIPPING"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="sbox" Binding="{Binding sbox}" Header="SBOX"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="available" Binding="{Binding available}" Header="AVAILABLE"  MaxWidth="400" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="brand_name" Binding="{Binding BrandName.name}" Header="BRAND NAME"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="package" Binding="{Binding package}" Header="PACKAGE"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="in_stock" Binding="{Binding in_stock}" Header="IN STOCK"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="main_product" Binding="{Binding main_product}" Header="MAIN PRODUCT"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="vendor_id" Binding="{Binding vendor_id}" Header="VENDORID"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+               
+                <DataGridTextColumn x:Name="shipping_type" Binding="{Binding Additionally0.shipping_type}" Header="SHIPPING TYPE"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="template" Binding="{Binding Additionally0.Template.name}" Header="TEMPLATE"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="forname1" Binding="{Binding Additionally0.ForName.forname1}" Header="FORNAME1"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="forname2" Binding="{Binding Additionally0.ForName.forname2}" Header="FORNAME2"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="valid" Binding="{Binding Additionally0.valid}" Header="VALID"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="core" Binding="{Binding Additionally0.core}" Header="CORE"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="data_source" Binding="{Binding Additionally0.data_source}" Header="DATA SOURCE"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="our_price" Binding="{Binding Additionally.our_price}" Header="OUR PRICE"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="key_field" Binding="{Binding Additionally.key_field}" Header="KEY FIELD"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="position_my" Binding="{Binding Additionally.position_my}" Header="POSITION MY"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="short_teg" Binding="{Binding Additionally.short_teg}" Header="SHORT TEG"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="detail_teg" Binding="{Binding Additionally.detail_teg}" Header="DETAIL TEG"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="metka" Binding="{Binding Additionally.metka}" Header="METKA"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="cf_mesh" Binding="{Binding Additionally.cf_mesh}" Header="CF MESH"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="key_virt" Binding="{Binding Additionally.key_virt}" Header="KEY VIRT"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="steps" Binding="{Binding Additionally.steps}" Header="steps"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+
+                <DataGridTextColumn x:Name="series" Binding="{Binding Additionally.series}" Header="SERIES"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black">
+                </DataGridTextColumn>
+                <DataGridTextColumn x:Name="product" Binding="{Binding Additionally.product}" Header="PRODUCT"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black">
+                 </DataGridTextColumn>
+                <DataGridTextColumn x:Name="template_my" Binding="{Binding Additionally.template_my}" Header="TEMPLATE_MY"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black">
+                   
+                </DataGridTextColumn>
+                <DataGridTextColumn x:Name="for_product_name" Binding="{Binding Additionally.for_product_name}" Header="FOR PRODUCT NAME"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black">
+                    
+                </DataGridTextColumn>
+                <DataGridTextColumn x:Name="finish" Binding="{Binding Additionally.finish}" Header="FINISH"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="form" Binding="{Binding Additionally.form}" Header="FORM"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="tipo_type" Binding="{Binding Additionally.tipo_type}" Header="TIPO TYPE"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="with_mesh" Binding="{Binding Additionally.with_mesh}" Header="WITH_MESH"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTextColumn x:Name="real_lenth_on_car" Binding="{Binding Additionally.real_lenth_on_car}" Header="REAL LENGTH ON CAR"  MaxWidth="200" SortDirection="Ascending" FontSize="12" FontFamily="Georgia" Foreground="Black"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="RESOURCES" MinWidth="130" Width="SizeToCells" CanUserSort="True"  >
+                    <DataGridTemplateColumn.CellTemplate >
+                        <DataTemplate>
+                            <Grid Background="#FF4F81BD">
+                                <StackPanel Orientation="Vertical"  >
+                                    <TextBlock Text="{Binding Additionally.Resource.img1}" />
+                                    <TextBlock Text="{Binding Additionally.Resource.img2}"  />
+                                    <TextBlock Text="{Binding Additionally.Resource.img3}" />
+                                    <TextBlock Text="{Binding Additionally.Resource.img4}" />
+                                    <TextBlock Text="{Binding Additionally.Resource.pdf}" />
+                                    <TextBlock Text="{Binding Additionally.Resource.icon}" />
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="0" Padding="10">
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF009ECC" Offset="0.004"/>
+                                <GradientStop Color="White" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="Fitments" FontWeight="Bold" FontSize="16" TextDecorations="Underline" FontFamily="Georgia"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Operations with fitments:" TextWrapping="Wrap" Width="70"  Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                                <Button  Margin="10" Width="40" Height="40" Click="DeleteFitment_Button_Click">
+                                    <Button.Background>
+                                        <ImageBrush ImageSource="delete.png"/>
+                                    </Button.Background>
+                                </Button>
+                                <Button Margin="10" Width="40" Height="40" Click="Load_Fitment_Button_Click">
+                                    <Button.Background>
+                                        <ImageBrush ImageSource="load.png"/>
+                                    </Button.Background>
+                                </Button>
+                            </StackPanel>
+                            <DataGrid Tag="{Binding sku}" MaxHeight="600" x:Name="datagridf"  AutoGenerateColumns="false" Initialized="dataGrid_XML_Initialized" CellEditEnding="datagridf_CellEditEnding"  >
+                                <DataGrid.Columns>
+                                    <DataGridCheckBoxColumn x:Name="NOf" Binding="{Binding sku}"  Header="No." MaxWidth="200" CanUserSort="False" CanUserReorder="False" CanUserResize="False"></DataGridCheckBoxColumn>
+                                    <DataGridTextColumn Binding="{Binding year}"  Header="YEAR" />
+                                    <DataGridTextColumn Binding="{Binding Make.make1}"  Header="MAKE" />
+                                    <DataGridTextColumn Binding="{Binding Make.model}"  Header="MODEL" />
+                                    <DataGridTextColumn Binding="{Binding Make.our_make}"  Header="OUR MAKE" />
+                                    <DataGridTextColumn Binding="{Binding Make.body_type_name}"  Header="BODY TYPE NAME" />
+                                    <DataGridTextColumn Binding="{Binding Make.our_body_type_name}"  Header="OUR BODY TYPE NAME" />
+                                    <DataGridTextColumn Binding="{Binding Make.mf_body_code_name}"  Header="MF BODY CODE NAME" />
+                                    <DataGridTextColumn Binding="{Binding Make.our_model}"  Header="OUR MODEL" />
+                                    <DataGridTextColumn Binding="{Binding submodel}"  Header="SUBMODEL" />
+                                    <DataGridTextColumn Binding="{Binding body_num_doors}"  Header="_BODY NUM DOORS_" />
+                                    <DataGridTextColumn Binding="{Binding universal_sku}"  Header="UNIVERSAL SKU" />
+                                    <DataGridTextColumn Binding="{Binding required_sku}"  Header="REQUIRED SKU" />
+                                    <DataGridTextColumn Binding="{Binding option_sku}"  Header="OPTION SKU" />
+                                    <DataGridTextColumn Binding="{Binding available}"  Header="AVAILABLE" />
+                                    <DataGridTextColumn Binding="{Binding available1}"  Header="AVAILABLE1" />
+                                    <DataGridTextColumn Binding="{Binding available2}"  Header="AVAILABLE2" />
+                                    <DataGridTextColumn Binding="{Binding fitment_note}"  Header="FITMENT NOTE" />
+                                    <DataGridTextColumn Binding="{Binding our_real_model}"  Header="OUR REAL MODEL" />
+                                    <DataGridTextColumn Binding="{Binding processing}"  Header="PROCESSING" />
+                                    <DataGridTextColumn Binding="{Binding BrandName.name}"  Header="BRAND" />
+                                    <DataGridTextColumn Binding="{Binding num_door}"  Header="NUM DOOR" />
+                                    <DataGridTextColumn Binding="{Binding length}"  Header="LENGTH_B" />
+                                    <DataGridTextColumn Binding="{Binding mmy}"  Header="MMY" />
+
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+        </DataGrid>
+        <StatusBar  Grid.Row="1" VerticalAlignment="Bottom" Height="20">
+            <TextBlock Name="statusBar"  Text="Ready"></TextBlock>
+        </StatusBar>
+    </Grid>
+</Window>
